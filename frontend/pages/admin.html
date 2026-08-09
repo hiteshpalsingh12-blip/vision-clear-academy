@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - Vision Clear Academy</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container nav-container">
+        <a href="../index.html" class="logo">
+          <img
+            src="../images/logo.png"
+            alt="Vision Clear Academy"
+            class="logo-img"
+          />
+          <span class="logo-text"
+            >Vision Clear <span class="gold">Academy</span></span
+          >
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="#" onclick="logout()" class="btn-login">Logout</a></li>
+        </ul>
+        <button class="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="dashboard-layout">
+      <!-- Admin Sidebar -->
+      <aside class="sidebar">
+        <div
+          style="
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+          "
+        >
+          <p
+            style="
+              font-size: 0.78rem;
+              color: var(--text-muted);
+              text-transform: uppercase;
+              letter-spacing: 0.06em;
+            "
+          >
+            Admin Panel
+          </p>
+        </div>
+        <a
+          href="#"
+          class="sidebar-link active"
+          onclick="showSection('dashboard')"
+          >📊 Dashboard</a
+        >
+        <a href="#" class="sidebar-link" onclick="showSection('courses')"
+          >📚 Manage Courses</a
+        >
+        <a href="#" class="sidebar-link" onclick="showSection('addcourse')"
+          >➕ Add Course</a
+        >
+        <a href="#" class="sidebar-link" onclick="showSection('users')"
+          >👥 Users</a
+        >
+        <a href="#" class="sidebar-link" onclick="showSection('addlesson')"
+          >🎬 Add Lesson</a
+        >
+        <a href="#" class="sidebar-link" onclick="logout()">🚪 Logout</a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="dashboard-main">
+        <!-- DASHBOARD SECTION -->
+        <div id="section-dashboard">
+          <h1
+            style="
+              font-size: 2rem;
+              font-weight: 800;
+              letter-spacing: -0.03em;
+              margin-bottom: 32px;
+            "
+          >
+            Admin Dashboard
+          </h1>
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-value" id="totalCourses">0</div>
+              <div class="stat-title">Total Courses</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="totalUsers">0</div>
+              <div class="stat-title">Total Users</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="totalRevenue">₹0</div>
+              <div class="stat-title">Revenue</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="totalLessons">0</div>
+              <div class="stat-title">Total Lessons</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MANAGE COURSES SECTION -->
+        <div id="section-courses" style="display: none">
+          <h1
+            style="
+              font-size: 2rem;
+              font-weight: 800;
+              letter-spacing: -0.03em;
+              margin-bottom: 32px;
+            "
+          >
+            Manage Courses
+          </h1>
+          <div class="dashboard-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Lessons</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="coursesTable">
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 40px">
+                    Loading courses...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ADD COURSE SECTION -->
+        <div id="section-addcourse" style="display: none">
+          <h1
+            style="
+              font-size: 2rem;
+              font-weight: 800;
+              letter-spacing: -0.03em;
+              margin-bottom: 32px;
+            "
+          >
+            Add New Course
+          </h1>
+          <div class="dashboard-card" style="max-width: 600px">
+            <form id="addCourseForm">
+              <div class="form-group">
+                <label>Course Title</label>
+                <input
+                  type="text"
+                  id="courseTitle"
+                  placeholder="e.g., Forex Basics Masterclass"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <textarea
+                  id="courseDesc"
+                  placeholder="Describe the course..."
+                  required
+                ></textarea>
+              </div>
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+              >
+                <div class="form-group">
+                  <label>Price (₹)</label>
+                  <input
+                    type="number"
+                    id="coursePrice"
+                    placeholder="4999"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label>Category</label>
+                  <select id="courseCategory">
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="masterclass">Masterclass</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Course Image</label>
+                <input type="file" id="courseImage" accept="image/*" />
+              </div>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 16px;
+                  margin-bottom: 20px;
+                "
+              >
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    cursor: pointer;
+                  "
+                >
+                  <input type="checkbox" id="coursePublished" /> Published
+                </label>
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    cursor: pointer;
+                  "
+                >
+                  <input type="checkbox" id="courseLocked" checked /> Locked
+                  (requires payment)
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary form-btn">
+                Create Course
+              </button>
+              <div
+                id="courseMessage"
+                style="text-align: center; margin-top: 16px; font-size: 0.9rem"
+              ></div>
+            </form>
+          </div>
+        </div>
+
+        <!-- USERS SECTION -->
+        <div id="section-users" style="display: none">
+          <h1
+            style="
+              font-size: 2rem;
+              font-weight: 800;
+              letter-spacing: -0.03em;
+              margin-bottom: 32px;
+            "
+          >
+            All Users
+          </h1>
+          <div class="dashboard-card">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Joined</th>
+                </tr>
+              </thead>
+              <tbody id="usersTable">
+                <tr>
+                  <td colspan="4" style="text-align: center; padding: 40px">
+                    Loading users...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ADD LESSON SECTION -->
+        <div id="section-addlesson" style="display: none">
+          <h1
+            style="
+              font-size: 2rem;
+              font-weight: 800;
+              letter-spacing: -0.03em;
+              margin-bottom: 32px;
+            "
+          >
+            Add Lesson to Course
+          </h1>
+          <div class="dashboard-card" style="max-width: 600px">
+            <form id="addLessonForm">
+              <div class="form-group">
+                <label>Select Course</label>
+                <select id="lessonCourseId" required>
+                  <option value="">-- Select a course --</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Lesson Title</label>
+                <input
+                  type="text"
+                  id="lessonTitle"
+                  placeholder="e.g., Introduction to Pips"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Video</label>
+                <input type="file" id="lessonVideo" accept="video/*" />
+              </div>
+              <div class="form-group">
+                <label>Or Video URL (YouTube, etc.)</label>
+                <input
+                  type="url"
+                  id="lessonVideoUrl"
+                  placeholder="https://youtube.com/..."
+                />
+              </div>
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+              >
+                <div class="form-group">
+                  <label>Duration</label>
+                  <input type="text" id="lessonDuration" placeholder="15:30" />
+                </div>
+                <div class="form-group">
+                  <label>Order</label>
+                  <input type="number" id="lessonOrder" placeholder="1" />
+                </div>
+              </div>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  cursor: pointer;
+                  margin-bottom: 20px;
+                "
+              >
+                <input type="checkbox" id="lessonFree" /> Free Preview Lesson
+              </label>
+              <button type="submit" class="btn btn-primary form-btn">
+                Add Lesson
+              </button>
+              <div
+                id="lessonMessage"
+                style="text-align: center; margin-top: 16px; font-size: 0.9rem"
+              ></div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses - Vision Clear Academy</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container nav-container">
+        <a href="../index.html" class="logo">
+          <img
+            src="../images/logo.png"
+            alt="Vision Clear Academy"
+            class="logo-img"
+          />
+          <span class="logo-text"
+            >Vision Clear <span class="gold">Academy</span></span
+          >
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="courses.html" class="active">Courses</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li>
+            <a href="login.html" class="btn btn-small btn-primary"
+              >Enroll Now</a
+            >
+          </li>
+          <li><a href="signup.html" class="btn-signup">Sign Up</a></li>
+        </ul>
+        <button class="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-header">
+      <div class="container">
+        <h1>Our <span class="gold">Courses</span></h1>
+        <p>
+          Choose from our carefully crafted trading courses designed for every
+          level.
+        </p>
+      </div>
+    </section>
+
+    <section class="courses-section" style="padding-top: 60px">
+      <div class="container">
+        <div class="courses-grid" id="coursesGrid">
+          <div class="course-card">
+            <div class="course-image">📊</div>
+            <div class="course-badge">Beginner</div>
+            <div class="course-info">
+              <h3>Forex Basics Masterclass</h3>
+              <p>
+                Learn the fundamentals of forex trading from scratch. Perfect
+                for complete beginners.
+              </p>
+              <div class="course-meta">
+                <span>⏱ 12 Lessons</span>
+                <span>⭐ 4.9</span>
+                <span>👥 1200+ Students</span>
+              </div>
+              <div class="course-footer">
+                <span class="course-price">₹4,999</span>
+                <a
+                  href="checkout.html?courseId=REPLACE_ID&name=Forex Basics Masterclass&price=4999"
+                  class="btn btn-small btn-primary"
+                  >Enroll Now</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-image">📈</div>
+            <div class="course-badge">Intermediate</div>
+            <div class="course-info">
+              <h3>Technical Analysis Pro</h3>
+              <p>
+                Master chart patterns, indicators, and technical analysis
+                strategies.
+              </p>
+              <div class="course-meta">
+                <span>⏱ 20 Lessons</span>
+                <span>⭐ 4.8</span>
+                <span>👥 800+ Students</span>
+              </div>
+              <div class="course-footer">
+                <span class="course-price">₹9,999</span>
+                <a
+                  href="checkout.html?courseId=REPLACE_ID&name=Technical Analysis Pro&price=9999"
+                  class="btn btn-small btn-primary"
+                  >Enroll Now</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-image">💰</div>
+            <div class="course-badge">Advanced</div>
+            <div class="course-info">
+              <h3>Advanced Price Action</h3>
+              <p>
+                Trade like a pro with advanced price action and smart money
+                concepts.
+              </p>
+              <div class="course-meta">
+                <span>⏱ 30 Lessons</span>
+                <span>⭐ 5.0</span>
+                <span>👥 500+ Students</span>
+              </div>
+              <div class="course-footer">
+                <span class="course-price">₹14,999</span>
+                <a
+                  href="checkout.html?courseId=REPLACE_ID&name=Advanced Price Action&price=14999"
+                  class="btn btn-small btn-primary"
+                  >Enroll Now</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-image">🛡️</div>
+            <div class="course-badge">Essential</div>
+            <div class="course-info">
+              <h3>Risk Management Mastery</h3>
+              <p>
+                Learn how to protect your capital and manage risk like
+                professional traders.
+              </p>
+              <div class="course-meta">
+                <span>⏱ 8 Lessons</span>
+                <span>⭐ 4.9</span>
+                <span>👥 900+ Students</span>
+              </div>
+              <div class="course-footer">
+                <span class="course-price">₹3,499</span>
+                <a href="login.html" class="btn btn-small btn-primary"
+                  >Enroll Now</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-image">🧠</div>
+            <div class="course-badge">Advanced</div>
+            <div class="course-info">
+              <h3>Trading Psychology</h3>
+              <p>
+                Master your mind. Learn the psychological edge that separates
+                winners from losers.
+              </p>
+              <div class="course-meta">
+                <span>⏱ 10 Lessons</span>
+                <span>⭐ 4.7</span>
+                <span>👥 600+ Students</span>
+              </div>
+              <div class="course-footer">
+                <span class="course-price">₹5,999</span>
+                <a href="login.html" class="btn btn-small btn-primary"
+                  >Enroll Now</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="course-card">
+            <div class="course-image">🏆</div>
+            <div class="course-badge">Masterclass</div>
+            <div class="course-info">
+              <h3>Complete Trading Bundle</h3>
+              <p>
+                Get access to ALL courses + live sessions + mentorship. Best
+                value package.
+              </p>
+              <div class="course-meta">
+                <span>⏱ 80+ Lessons</span>
+                <span>⭐ 5.0</span>
+                <span>👥 300+ Students</span>
+              </div>
+              <div class="course-footer">
+                <span class="course-price">₹29,999</span>
+                <a href="login.html" class="btn btn-small btn-primary"
+                  >Enroll Now</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h3>Vision Clear <span class="gold">Academy</span></h3>
+            <p>India's leading trading academy. Learn, Trade, Succeed.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="courses.html">Courses</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Courses</h4>
+            <ul>
+              <li><a href="#">Forex Basics</a></li>
+              <li><a href="#">Technical Analysis</a></li>
+              <li><a href="#">Price Action</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <ul>
+              <li>📧 info@visionclearacademy.com</li>
+              <li>📞 +91 98765 43210</li>
+              <li>📍 Ludhiana, Punjab, India</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Vision Clear Academy. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

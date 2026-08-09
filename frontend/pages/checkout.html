@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - Vision Clear Academy</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container nav-container">
+        <a href="../index.html" class="logo">
+          <img
+            src="../images/logo.png"
+            alt="Vision Clear Academy"
+            class="logo-img"
+          />
+          <span class="logo-text"
+            >Vision Clear <span class="gold">Academy</span></span
+          >
+        </a>
+      </div>
+    </nav>
+
+    <section
+      style="padding-top: 100px; min-height: 100vh; background: var(--bg)"
+    >
+      <div class="container" style="max-width: 600px; padding: 60px 0">
+        <div class="form-card">
+          <h2>Checkout</h2>
+          <p class="form-subtitle">Complete your purchase</p>
+
+          <!-- Course Info -->
+          <div
+            style="
+              background: var(--bg);
+              border-radius: var(--radius-sm);
+              padding: 20px;
+              margin-bottom: 28px;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div>
+                <p
+                  style="
+                    font-size: 0.78rem;
+                    color: var(--text-muted);
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                  "
+                >
+                  Course
+                </p>
+                <h3
+                  id="checkoutCourseName"
+                  style="font-size: 1.1rem; font-weight: 700; margin-top: 4px"
+                >
+                  Loading...
+                </h3>
+              </div>
+              <div style="text-align: right">
+                <p
+                  style="
+                    font-size: 0.78rem;
+                    color: var(--text-muted);
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                  "
+                >
+                  Price
+                </p>
+                <p
+                  id="checkoutPrice"
+                  style="
+                    font-size: 1.4rem;
+                    font-weight: 800;
+                    color: var(--text-primary);
+                    margin-top: 4px;
+                  "
+                >
+                  ₹0
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Method -->
+          <div style="margin-bottom: 28px">
+            <p
+              style="font-size: 0.85rem; font-weight: 600; margin-bottom: 12px"
+            >
+              Payment Method
+            </p>
+            <div
+              style="
+                background: var(--bg);
+                border: 2px solid var(--accent);
+                border-radius: var(--radius-sm);
+                padding: 16px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+              "
+            >
+              <span style="font-size: 1.5rem">💳</span>
+              <div>
+                <p style="font-weight: 600; font-size: 0.95rem">
+                  Razorpay (Demo)
+                </p>
+                <p style="font-size: 0.8rem; color: var(--text-muted)">
+                  UPI, Cards, Netbanking, Wallets
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div
+            style="
+              border-top: 1px solid var(--border);
+              padding-top: 20px;
+              margin-bottom: 24px;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+              "
+            >
+              <span style="color: var(--text-secondary)">Subtotal</span>
+              <span id="subtotal" style="font-weight: 600">₹0</span>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+              "
+            >
+              <span style="color: var(--text-secondary)">GST (18%)</span>
+              <span id="gst" style="font-weight: 600">₹0</span>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                padding-top: 12px;
+                border-top: 1px solid var(--border);
+              "
+            >
+              <span style="font-weight: 700; font-size: 1.1rem">Total</span>
+              <span
+                id="total"
+                style="
+                  font-weight: 800;
+                  font-size: 1.3rem;
+                  color: var(--accent-dark);
+                "
+                >₹0</span
+              >
+            </div>
+          </div>
+
+          <button
+            id="payBtn"
+            class="btn btn-primary form-btn"
+            onclick="processPayment()"
+          >
+            Pay Now
+          </button>
+
+          <div
+            id="paymentMessage"
+            style="text-align: center; margin-top: 16px; font-size: 0.9rem"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <script src="../js/main.js"></script>
+    <script>
+      const API = "http://localhost:5000/api";
+      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      // Check login
+      if (!token || !user) {
+        window.location.href = "login.html";
+      }
+
+      // Get course ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = urlParams.get("courseId");
+      const courseName = urlParams.get("name");
+      const coursePrice = parseInt(urlParams.get("price")) || 0;
+
+      // Display course info
+      document.getElementById("checkoutCourseName").textContent =
+        courseName || "Course";
+      document.getElementById("checkoutPrice").textContent =
+        "₹" + coursePrice.toLocaleString();
+      document.getElementById("subtotal").textContent =
+        "₹" + coursePrice.toLocaleString();
+
+      var gstAmount = Math.round(coursePrice * 0.18);
+      document.getElementById("gst").textContent =
+        "₹" + gstAmount.toLocaleString();
+      document.getElementById("total").textContent =
+        "₹" + (coursePrice + gstAmount).toLocaleString();
+
+      // Process Payment (Demo)
+      async function processPayment() {
+        var msgDiv = document.getElementById("paymentMessage");
+        var payBtn = document.getElementById("payBtn");
+        payBtn.textContent = "Processing...";
+        payBtn.disabled = true;
+
+        try {
+          // Step 1: Create order
+          var orderRes = await fetch(API + "/payments/create-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify({ courseId: courseId }),
+          });
+
+          var orderData = await orderRes.json();
+
+          if (!orderData.success) {
+            msgDiv.style.color = "red";
+            msgDiv.textContent = orderData.message;
+            payBtn.textContent = "Pay Now";
+            payBtn.disabled = false;
+            return;
+          }
+
+          // Step 2: Simulate payment (Demo - 2 second delay)
+          msgDiv.style.color = "var(--accent-dark)";
+          msgDiv.textContent = "Processing payment via Razorpay...";
+
+          await new Promise(function (resolve) {
+            setTimeout(resolve, 2000);
+          });
+
+          // Step 3: Verify payment (Demo payment ID)
+          var demoPaymentId = "pay_demo_" + Date.now();
+
+          var verifyRes = await fetch(API + "/payments/verify", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify({
+              orderId: orderData.data.orderId,
+              paymentId: demoPaymentId,
+            }),
+          });
+
+          var verifyData = await verifyRes.json();
+
+          if (verifyData.success) {
+            msgDiv.style.color = "green";
+            msgDiv.innerHTML =
+              "✅ Payment successful! Course enrolled.<br>Redirecting to dashboard...";
+
+            setTimeout(function () {
+              window.location.href = "dashboard.html";
+            }, 2000);
+          } else {
+            msgDiv.style.color = "red";
+            msgDiv.textContent = verifyData.message;
+            payBtn.textContent = "Pay Now";
+            payBtn.disabled = false;
+          }
+        } catch (error) {
+          msgDiv.style.color = "red";
+          msgDiv.textContent = "Payment failed. Please try again.";
+          payBtn.textContent = "Pay Now";
+          payBtn.disabled = false;
+        }
+      }
+    </script>
+  </body>
+</html>

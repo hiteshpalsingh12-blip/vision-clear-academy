@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Vision Clear Academy</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container nav-container">
+        <a href="../index.html" class="logo">
+          <img
+            src="../images/logo.png"
+            alt="Vision Clear Academy"
+            class="logo-img"
+          />
+          <span class="logo-text"
+            >Vision Clear <span class="gold">Academy</span></span
+          >
+        </a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="#" onclick="logout()" class="btn-login">Logout</a></li>
+        </ul>
+        <button class="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div
+          style="
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
+          "
+        >
+          <p
+            style="
+              font-size: 0.78rem;
+              color: var(--text-muted);
+              text-transform: uppercase;
+              letter-spacing: 0.06em;
+            "
+          >
+            Student Panel
+          </p>
+        </div>
+        <a href="#" class="sidebar-link active">📊 Dashboard</a>
+        <a href="courses.html" class="sidebar-link">📚 My Courses</a>
+        <a href="#" class="sidebar-link">📜 Certificates</a>
+        <a href="#" class="sidebar-link">⚙️ Settings</a>
+        <a href="#" class="sidebar-link" onclick="logout()">🚪 Logout</a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="dashboard-main">
+        <div style="margin-bottom: 32px">
+          <h1
+            style="font-size: 2rem; font-weight: 800; letter-spacing: -0.03em"
+          >
+            Welcome back, <span id="userName" class="gold">Student</span>
+          </h1>
+          <p style="color: var(--text-secondary); margin-top: 4px">
+            Here's your learning progress
+          </p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-value">0</div>
+            <div class="stat-title">Enrolled Courses</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">0</div>
+            <div class="stat-title">Completed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">0</div>
+            <div class="stat-title">Certificates</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">0%</div>
+            <div class="stat-title">Progress</div>
+          </div>
+        </div>
+
+        <!-- My Courses -->
+        <div class="dashboard-card">
+          <h2
+            style="
+              font-size: 1.3rem;
+              font-weight: 700;
+              letter-spacing: -0.02em;
+              margin-bottom: 20px;
+            "
+          >
+            My Courses
+          </h2>
+          <div id="enrolledCourses">
+            <p
+              style="
+                color: var(--text-muted);
+                text-align: center;
+                padding: 40px 0;
+              "
+            >
+              You haven't enrolled in any courses yet.<br />
+              <a
+                href="courses.html"
+                style="color: var(--accent-dark); font-weight: 600"
+                >Browse Courses →</a
+              >
+            </p>
+          </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="dashboard-card">
+          <h2
+            style="
+              font-size: 1.3rem;
+              font-weight: 700;
+              letter-spacing: -0.02em;
+              margin-bottom: 20px;
+            "
+          >
+            My Profile
+          </h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px">
+            <div>
+              <p
+                style="
+                  font-size: 0.78rem;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.06em;
+                "
+              >
+                Name
+              </p>
+              <p id="profileName" style="font-weight: 600; margin-top: 4px">
+                -
+              </p>
+            </div>
+            <div>
+              <p
+                style="
+                  font-size: 0.78rem;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.06em;
+                "
+              >
+                Email
+              </p>
+              <p id="profileEmail" style="font-weight: 600; margin-top: 4px">
+                -
+              </p>
+            </div>
+            <div>
+              <p
+                style="
+                  font-size: 0.78rem;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.06em;
+                "
+              >
+                Role
+              </p>
+              <p id="profileRole" style="font-weight: 600; margin-top: 4px">
+                -
+              </p>
+            </div>
+            <div>
+              <p
+                style="
+                  font-size: 0.78rem;
+                  color: var(--text-muted);
+                  text-transform: uppercase;
+                  letter-spacing: 0.06em;
+                "
+              >
+                Member Since
+              </p>
+              <p id="profileDate" style="font-weight: 600; margin-top: 4px">
+                -
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+      // Check if user is logged in
+      const user = JSON.parse(localStorage.getItem("user"));
+      const token = localStorage.getItem("token");
+
+      if (!token || !user) {
+        window.location.href = "login.html";
+      } else {
+        // Fill profile data
+        document.getElementById("userName").textContent =
+          user.name || "Student";
+        document.getElementById("profileName").textContent = user.name || "-";
+        document.getElementById("profileEmail").textContent = user.email || "-";
+        document.getElementById("profileRole").textContent =
+          user.role || "Student";
+        document.getElementById("profileDate").textContent = user.createdAt
+          ? new Date(user.createdAt).toLocaleDateString()
+          : new Date().toLocaleDateString();
+
+        // If admin, show admin link
+        if (user.role === "admin") {
+          document.getElementById("userName").textContent =
+            user.name || "Admin";
+        }
+      }
+    </script>
+  </body>
+</html>
