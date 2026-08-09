@@ -1022,20 +1022,6 @@ img {
   }
 }
 
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 2.2rem;
-  }
-  .stats-row {
-    grid-template-columns: 1fr;
-  }
-  .hero-stats {
-    gap: 24px;
-  }
-  .stat-number {
-    font-size: 1.8rem;
-  }
-}
 /* ============================================
    RESPONSIVE DESIGN — Mobile + iPad + Tablet
    ============================================ */
