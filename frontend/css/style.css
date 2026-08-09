@@ -13,8 +13,8 @@
   --text-primary: #1d1d1f;
   --text-secondary: #6e6e73;
   --text-muted: #86868b;
-  --accent: #d4af37;
-  --accent-dark: #b8960c;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
   --border: #d2d2d7;
   --card-bg: #ffffff;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -163,7 +163,7 @@ img {
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  height: 64px;
+  height: 72px;
   display: flex;
   align-items: center;
 }
@@ -269,7 +269,7 @@ img {
 }
 
 .hero h1 .gold {
-  background: linear-gradient(135deg, #d4af37, #f4d03f, #d4af37);
+  background: linear-gradient(135deg, #2563eb, #60a5fa, #2563eb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -578,7 +578,7 @@ img {
 }
 
 .cta .gold {
-  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  background: linear-gradient(135deg, #60a5fa, #93c5fd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -719,7 +719,7 @@ img {
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .form-group textarea {
@@ -883,7 +883,7 @@ img {
 }
 /* Logo Image */
 .logo-img {
-  height: 32px;
+  height: 50px;
   width: auto;
   object-fit: contain;
 }
