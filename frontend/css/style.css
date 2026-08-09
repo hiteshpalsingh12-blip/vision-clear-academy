@@ -2,13 +2,16 @@
 .forex-ticker {
   background: var(--text-primary);
   color: var(--white);
-  padding: 8px 0;
+  padding: 6px 0;
   overflow: hidden;
-  position: relative;
-  font-size: 0.8rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  z-index: 1001;
+  z-index: 1002;
 }
 
 .ticker-wrap {
@@ -26,11 +29,12 @@
 }
 
 .ticker-pair {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
 }
 
 .ticker-rate {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .ticker-up {
@@ -49,16 +53,63 @@
   }
 }
 
+/* Navbar ko ticker ke neeche adjust karo */
 .navbar {
-  top: 33px;
+  top: 29px;
 }
 
+/* Hero padding adjust */
 .hero {
-  padding-top: 113px;
+  padding-top: 109px;
 }
 
+/* Page header adjust */
 .page-header {
-  padding-top: 173px;
+  padding-top: 169px;
+}
+
+/* Dashboard adjust */
+.dashboard-layout {
+  padding-top: 81px;
+}
+
+/* Sidebar adjust */
+.sidebar {
+  top: 81px;
+}
+
+/* Mobile ticker */
+@media (max-width: 768px) {
+  .forex-ticker {
+    font-size: 0.7rem;
+    padding: 5px 0;
+  }
+  .navbar {
+    top: 26px;
+    height: 56px;
+  }
+  .nav-links {
+    top: 82px;
+  }
+  .hero {
+    padding-top: 96px;
+  }
+  .page-header {
+    padding-top: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .forex-ticker {
+    font-size: 0.65rem;
+    padding: 4px 0;
+  }
+  .navbar {
+    top: 24px;
+  }
+  .hero {
+    padding-top: 90px;
+  }
 }
 /* ============================================
    FOREX TRADING ACADEMY
