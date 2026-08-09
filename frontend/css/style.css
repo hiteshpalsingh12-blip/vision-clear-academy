@@ -2,7 +2,7 @@
 .forex-ticker {
   background: var(--text-primary);
   color: var(--white);
-  padding: 6px 0;
+  padding: 7px 0;
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -11,7 +11,8 @@
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  z-index: 1002;
+  z-index: 1003;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .ticker-wrap {
@@ -52,27 +53,52 @@
     transform: translateX(-50%);
   }
 }
-
-/* Navbar ko ticker ke neeche adjust karo */
+/* Ticker + Navbar Position Fix */
 .navbar {
-  top: 29px;
+  top: 30px;
 }
 
-/* Hero padding adjust */
 .hero {
-  padding-top: 109px;
+  padding-top: 150px;
 }
 
-/* Page header adjust */
 .page-header {
-  padding-top: 169px;
+  padding-top: 180px;
 }
 
-/* Dashboard adjust */
 .dashboard-layout {
-  padding-top: 81px;
+  padding-top: 82px;
 }
 
+.sidebar {
+  top: 82px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .navbar {
+    top: 28px;
+    height: 56px;
+  }
+  .nav-links {
+    top: 84px;
+  }
+  .hero {
+    padding-top: 130px;
+  }
+  .page-header {
+    padding-top: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    top: 26px;
+  }
+  .hero {
+    padding-top: 120px;
+  }
+}
 /* Sidebar adjust */
 .sidebar {
   top: 81px;
@@ -85,7 +111,6 @@
     padding: 5px 0;
   }
   .navbar {
-    top: 26px;
     height: 56px;
   }
   .nav-links {
@@ -105,7 +130,6 @@
     padding: 4px 0;
   }
   .navbar {
-    top: 24px;
   }
   .hero {
     padding-top: 90px;
@@ -269,14 +293,14 @@ img {
    ============================================ */
 .navbar {
   position: fixed;
-  top: 0;
+  top: 30px;
   width: 100%;
-  z-index: 1000;
+  z-index: 1001;
   background: rgba(251, 251, 253, 0.8);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  height: 72px;
+  height: 52px;
   display: flex;
   align-items: center;
 }
