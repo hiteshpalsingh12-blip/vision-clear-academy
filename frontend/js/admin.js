@@ -1,6 +1,6 @@
 // ADMIN PANEL JavaScript
 
-const API = "http://localhost:5000/api";
+const API = "https://vision-clear-academy.onrender.com/";
 
 // Check admin access
 const user = JSON.parse(localStorage.getItem("user"));

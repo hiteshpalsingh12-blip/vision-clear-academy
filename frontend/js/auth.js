@@ -1,6 +1,6 @@
 // AUTH - Login & Signup JavaScript
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://vision-clear-academy.onrender.com/";
 
 // ============================================
 // SIGNUP
