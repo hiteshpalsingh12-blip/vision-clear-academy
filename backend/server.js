@@ -18,7 +18,12 @@ const connectDB = require("./config/db");
 const app = express();
 
 // --- Middleware ---
-app.use(cors()); // Frontend ko backend se connect hone do
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  }),
+); // Frontend ko backend se connect hone do
 app.use(express.json()); // JSON data accept karo
 app.use(express.urlencoded({ extended: true })); // Form data accept karo
 
