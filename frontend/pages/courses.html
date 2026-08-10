@@ -139,7 +139,11 @@
               "<span>⏱ " +
               (course.lessons ? course.lessons.length : 0) +
               " Lessons</span>";
-            html += "<span>👥 " + course.totalStudents + " Students</span>";
+            if (course.totalStudents > 0) {
+              html += "<span>👥 " + course.totalStudents + " Students</span>";
+            } else {
+              html += "<span>🆕 New Course</span>";
+            }
             html += "</div>";
             html += '<div class="course-footer">';
             html +=

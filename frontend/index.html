@@ -368,9 +368,13 @@
             html +=
               '<div class="course-meta"><span>⏱ ' +
               (course.lessons ? course.lessons.length : 0) +
-              " Lessons</span><span>👥 " +
-              course.totalStudents +
-              "</span></div>";
+              " Lessons</span>";
+            if (course.totalStudents > 0) {
+              html += "<span>👥 " + course.totalStudents + "</span>";
+            } else {
+              html += "<span>🆕 New</span>";
+            }
+            html += "</div>";
             html +=
               '<div class="course-footer"><span class="course-price">₹' +
               course.price.toLocaleString() +
