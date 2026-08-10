@@ -13,6 +13,12 @@ dotenv.config();
 
 // --- Database Connection Import ---
 const connectDB = require("./config/db");
+// --- Uploads Folder Auto-Create ---
+const fs = require("fs");
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // --- Express App Initialize ---
 const app = express();
