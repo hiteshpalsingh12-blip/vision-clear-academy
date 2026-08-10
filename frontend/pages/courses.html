@@ -50,149 +50,16 @@
     <section class="courses-section" style="padding-top: 60px">
       <div class="container">
         <div class="courses-grid" id="coursesGrid">
-          <div class="course-card">
-            <div class="course-image">📊</div>
-            <div class="course-badge">Beginner</div>
-            <div class="course-info">
-              <h3>Forex Basics 20 Days Course</h3>
-              <p>
-                Learn the fundamentals of forex trading from scratch. Perfect
-                for complete beginners.
-              </p>
-              <div class="course-meta">
-                <span>⏱ 10 Lessons</span>
-                <span>⭐ 4.9</span>
-                <span>👥 1200+ Students</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹25,000</span>
-                <a
-                  href="checkout.html?courseId=REPLACE_ID&name=Forex Basics Masterclass&price=25000"
-                  class="btn btn-small btn-primary"
-                  >Enroll Now</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="course-card">
-            <div class="course-image">📈</div>
-            <div class="course-badge">Intermediate</div>
-            <div class="course-info">
-              <h3>Technical Analysis Pro</h3>
-              <p>
-                Master chart patterns, indicators, and technical analysis
-                strategies.
-              </p>
-              <div class="course-meta">
-                <span>⏱ 20 Lessons</span>
-                <span>⭐ 4.8</span>
-                <span>👥 800+ Students</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹9,999</span>
-                <a
-                  href="checkout.html?courseId=REPLACE_ID&name=Technical Analysis Pro&price=9999"
-                  class="btn btn-small btn-primary"
-                  >Enroll Now</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="course-card">
-            <div class="course-image">💰</div>
-            <div class="course-badge">Advanced</div>
-            <div class="course-info">
-              <h3>Advanced Price Action</h3>
-              <p>
-                Trade like a pro with advanced price action and smart money
-                concepts.
-              </p>
-              <div class="course-meta">
-                <span>⏱ 30 Lessons</span>
-                <span>⭐ 5.0</span>
-                <span>👥 500+ Students</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹14,999</span>
-                <a
-                  href="checkout.html?courseId=REPLACE_ID&name=Advanced Price Action&price=14999"
-                  class="btn btn-small btn-primary"
-                  >Enroll Now</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="course-card">
-            <div class="course-image">🛡️</div>
-            <div class="course-badge">Essential</div>
-            <div class="course-info">
-              <h3>Risk Management Mastery</h3>
-              <p>
-                Learn how to protect your capital and manage risk like
-                professional traders.
-              </p>
-              <div class="course-meta">
-                <span>⏱ 8 Lessons</span>
-                <span>⭐ 4.9</span>
-                <span>👥 900+ Students</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹3,499</span>
-                <a href="login.html" class="btn btn-small btn-primary"
-                  >Enroll Now</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="course-card">
-            <div class="course-image">🧠</div>
-            <div class="course-badge">Advanced</div>
-            <div class="course-info">
-              <h3>Trading Psychology</h3>
-              <p>
-                Master your mind. Learn the psychological edge that separates
-                winners from losers.
-              </p>
-              <div class="course-meta">
-                <span>⏱ 10 Lessons</span>
-                <span>⭐ 4.7</span>
-                <span>👥 600+ Students</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹5,999</span>
-                <a href="login.html" class="btn btn-small btn-primary"
-                  >Enroll Now</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="course-card">
-            <div class="course-image">🏆</div>
-            <div class="course-badge">Masterclass</div>
-            <div class="course-info">
-              <h3>Complete Trading Bundle</h3>
-              <p>
-                Get access to ALL courses + live sessions + mentorship. Best
-                value package.
-              </p>
-              <div class="course-meta">
-                <span>⏱ 80+ Lessons</span>
-                <span>⭐ 5.0</span>
-                <span>👥 300+ Students</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹29,999</span>
-                <a href="login.html" class="btn btn-small btn-primary"
-                  >Enroll Now</a
-                >
-              </div>
-            </div>
-          </div>
+          <p
+            style="
+              text-align: center;
+              color: var(--text-muted);
+              grid-column: 1/-1;
+              padding: 60px 0;
+            "
+          >
+            Loading courses...
+          </p>
         </div>
       </div>
     </section>
@@ -238,4 +105,68 @@
 
     <script src="../js/main.js"></script>
   </body>
+  <script>
+    async function loadCourses() {
+      try {
+        var res = await fetch(
+          "https://vision-clear-academy.onrender.com/api/courses",
+        );
+        var data = await res.json();
+        var grid = document.getElementById("coursesGrid");
+
+        if (data.success && data.data.length > 0) {
+          var html = "";
+          data.data.forEach(function (course) {
+            var imageUrl = course.image
+              ? "https://vision-clear-academy.onrender.com" + course.image
+              : "";
+
+            html += '<div class="course-card">';
+            if (imageUrl) {
+              html +=
+                '<div class="course-image" style="background-image: url(' +
+                imageUrl +
+                '); background-size: cover; background-position: center;"></div>';
+            } else {
+              html += '<div class="course-image">📊</div>';
+            }
+            html += '<div class="course-badge">' + course.category + "</div>";
+            html += '<div class="course-info">';
+            html += "<h3>" + course.title + "</h3>";
+            html += "<p>" + course.description + "</p>";
+            html += '<div class="course-meta">';
+            html +=
+              "<span>⏱ " +
+              (course.lessons ? course.lessons.length : 0) +
+              " Lessons</span>";
+            html += "<span>👥 " + course.totalStudents + " Students</span>";
+            html += "</div>";
+            html += '<div class="course-footer">';
+            html +=
+              '<span class="course-price">₹' +
+              course.price.toLocaleString() +
+              "</span>";
+            html +=
+              '<a href="checkout.html?courseId=' +
+              course._id +
+              "&name=" +
+              encodeURIComponent(course.title) +
+              "&price=" +
+              course.price +
+              '" class="btn btn-small btn-primary">Enroll Now</a>';
+            html += "</div></div></div>";
+          });
+          grid.innerHTML = html;
+        } else {
+          grid.innerHTML =
+            '<p style="text-align:center; color: var(--text-muted); grid-column: 1/-1; padding: 60px 0;">No courses available yet. Check back soon!</p>';
+        }
+      } catch (error) {
+        console.error("Load courses error:", error);
+        document.getElementById("coursesGrid").innerHTML =
+          '<p style="text-align:center; color: red; grid-column: 1/-1; padding: 60px 0;">Error loading courses.</p>';
+      }
+    }
+    loadCourses();
+  </script>
 </html>
