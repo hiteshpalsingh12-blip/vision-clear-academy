@@ -273,7 +273,8 @@ if (addLessonForm) {
       }
     } catch (error) {
       msgDiv.style.color = "red";
-      msgDiv.textContent = "Server error. Try again.";
+      msgDiv.textContent = "Error: " + error.message;
+      console.error("Full error:", error);
     }
   });
 }
