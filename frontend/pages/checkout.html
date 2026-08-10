@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout - Vision Clear Academy</title>
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -187,7 +188,7 @@
 
     <script src="../js/main.js"></script>
     <script>
-      const API = "https://vision-clear-academy.onrender.com/";
+      const API = "https://vision-clear-academy.onrender.com/api";
       const token = localStorage.getItem("token");
       const user = JSON.parse(localStorage.getItem("user"));
 
@@ -220,11 +221,10 @@
       async function processPayment() {
         var msgDiv = document.getElementById("paymentMessage");
         var payBtn = document.getElementById("payBtn");
-        payBtn.textContent = "Processing...";
+        payBtn.textContent = "Creating order...";
         payBtn.disabled = true;
 
         try {
-          // Step 1: Create order
           var orderRes = await fetch(API + "/payments/create-order", {
             method: "POST",
             headers: {
@@ -244,48 +244,70 @@
             return;
           }
 
-          // Step 2: Simulate payment (Demo - 2 second delay)
-          msgDiv.style.color = "var(--accent-dark)";
-          msgDiv.textContent = "Processing payment via Razorpay...";
+          var options = {
+            key: orderData.data.keyId,
+            amount: orderData.data.amount,
+            currency: orderData.data.currency,
+            name: "Vision Clear Academy",
+            description: orderData.data.courseName,
+            order_id: orderData.data.orderId,
+            handler: async function (response) {
+              try {
+                var verifyRes = await fetch(API + "/payments/verify", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                  },
+                  body: JSON.stringify({
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature: response.razorpay_signature,
+                  }),
+                });
 
-          await new Promise(function (resolve) {
-            setTimeout(resolve, 2000);
-          });
+                var verifyData = await verifyRes.json();
 
-          // Step 3: Verify payment (Demo payment ID)
-          var demoPaymentId = "pay_demo_" + Date.now();
-
-          var verifyRes = await fetch(API + "/payments/verify", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
+                if (verifyData.success) {
+                  msgDiv.style.color = "green";
+                  msgDiv.innerHTML = "✅ Payment successful! Redirecting...";
+                  setTimeout(function () {
+                    window.location.href = "dashboard.html";
+                  }, 2000);
+                } else {
+                  msgDiv.style.color = "red";
+                  msgDiv.textContent =
+                    "Verification failed: " + verifyData.message;
+                  payBtn.textContent = "Pay Now";
+                  payBtn.disabled = false;
+                }
+              } catch (err) {
+                msgDiv.style.color = "red";
+                msgDiv.textContent = "Verification error.";
+                payBtn.textContent = "Pay Now";
+                payBtn.disabled = false;
+              }
             },
-            body: JSON.stringify({
-              orderId: orderData.data.orderId,
-              paymentId: demoPaymentId,
-            }),
-          });
+            prefill: {
+              name: user.name || "",
+              email: user.email || "",
+              contact: user.phone || "",
+            },
+            theme: { color: "#2563EB" },
+            modal: {
+              ondismiss: function () {
+                payBtn.textContent = "Pay Now";
+                payBtn.disabled = false;
+                msgDiv.textContent = "Payment cancelled.";
+              },
+            },
+          };
 
-          var verifyData = await verifyRes.json();
-
-          if (verifyData.success) {
-            msgDiv.style.color = "green";
-            msgDiv.innerHTML =
-              "✅ Payment successful! Course enrolled.<br>Redirecting to dashboard...";
-
-            setTimeout(function () {
-              window.location.href = "dashboard.html";
-            }, 2000);
-          } else {
-            msgDiv.style.color = "red";
-            msgDiv.textContent = verifyData.message;
-            payBtn.textContent = "Pay Now";
-            payBtn.disabled = false;
-          }
+          var rzp = new Razorpay(options);
+          rzp.open();
         } catch (error) {
           msgDiv.style.color = "red";
-          msgDiv.textContent = "Payment failed. Please try again.";
+          msgDiv.textContent = "Payment failed. Try again.";
           payBtn.textContent = "Pay Now";
           payBtn.disabled = false;
         }
