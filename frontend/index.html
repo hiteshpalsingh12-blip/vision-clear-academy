@@ -205,63 +205,17 @@
           <h2>Popular <span class="gold">Courses</span></h2>
           <p>Start your trading journey with our most popular courses</p>
         </div>
-        <div class="courses-grid">
-          <div class="course-card">
-            <div class="course-image">📊</div>
-            <div class="course-badge">Beginner</div>
-            <div class="course-info">
-              <h3>Forex Basics Masterclass</h3>
-              <p>Learn the fundamentals of forex trading from scratch.</p>
-              <div class="course-meta">
-                <span>⏱ 12 Lessons</span>
-                <span>⭐ 4.9</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹4,999</span>
-                <a href="pages/courses.html" class="btn btn-small btn-primary"
-                  >View Course</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="course-card">
-            <div class="course-image">📈</div>
-            <div class="course-badge">Intermediate</div>
-            <div class="course-info">
-              <h3>Technical Analysis Pro</h3>
-              <p>
-                Master chart patterns, indicators, and technical strategies.
-              </p>
-              <div class="course-meta">
-                <span>⏱ 20 Lessons</span>
-                <span>⭐ 4.8</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹9,999</span>
-                <a href="pages/courses.html" class="btn btn-small btn-primary"
-                  >View Course</a
-                >
-              </div>
-            </div>
-          </div>
-          <div class="course-card">
-            <div class="course-image">💰</div>
-            <div class="course-badge">Advanced</div>
-            <div class="course-info">
-              <h3>Advanced Price Action</h3>
-              <p>Trade like a pro with advanced price action techniques.</p>
-              <div class="course-meta">
-                <span>⏱ 30 Lessons</span>
-                <span>⭐ 5.0</span>
-              </div>
-              <div class="course-footer">
-                <span class="course-price">₹14,999</span>
-                <a href="pages/courses.html" class="btn btn-small btn-primary"
-                  >View Course</a
-                >
-              </div>
-            </div>
-          </div>
+        <div class="courses-grid" id="homeCoursesGrid">
+          <p
+            style="
+              text-align: center;
+              color: var(--text-muted);
+              grid-column: 1/-1;
+              padding: 40px 0;
+            "
+          >
+            Loading courses...
+          </p>
         </div>
         <div class="center-btn">
           <a href="pages/courses.html" class="btn btn-primary"
@@ -383,4 +337,63 @@
 
     <script src="js/main.js"></script>
   </body>
+  <script>
+    async function loadHomeCourses() {
+      try {
+        var res = await fetch(
+          "https://vision-clear-academy.onrender.com/api/courses",
+        );
+        var data = await res.json();
+        var grid = document.getElementById("homeCoursesGrid");
+        if (data.success && data.data.length > 0) {
+          var courses = data.data.slice(0, 3);
+          var html = "";
+          courses.forEach(function (course) {
+            var imageUrl = course.image
+              ? "https://vision-clear-academy.onrender.com" + course.image
+              : "";
+            html += '<div class="course-card">';
+            if (imageUrl) {
+              html +=
+                '<div class="course-image" style="background-image:url(' +
+                imageUrl +
+                ');background-size:cover;background-position:center;"></div>';
+            } else {
+              html += '<div class="course-image">📊</div>';
+            }
+            html += '<div class="course-badge">' + course.category + "</div>";
+            html += '<div class="course-info">';
+            html += "<h3>" + course.title + "</h3>";
+            html += "<p>" + course.description + "</p>";
+            html +=
+              '<div class="course-meta"><span>⏱ ' +
+              (course.lessons ? course.lessons.length : 0) +
+              " Lessons</span><span>👥 " +
+              course.totalStudents +
+              "</span></div>";
+            html +=
+              '<div class="course-footer"><span class="course-price">₹' +
+              course.price.toLocaleString() +
+              "</span>";
+            html +=
+              '<a href="pages/checkout.html?courseId=' +
+              course._id +
+              "&name=" +
+              encodeURIComponent(course.title) +
+              "&price=" +
+              course.price +
+              '" class="btn btn-small btn-primary">Enroll Now</a>';
+            html += "</div></div></div>";
+          });
+          grid.innerHTML = html;
+        } else {
+          grid.innerHTML =
+            '<p style="text-align:center; color: var(--text-muted); grid-column: 1/-1; padding: 40px 0;">No courses available yet.</p>';
+        }
+      } catch (error) {
+        console.error("Home courses error:", error);
+      }
+    }
+    loadHomeCourses();
+  </script>
 </html>
