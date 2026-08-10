@@ -96,7 +96,9 @@ async function loadCourses() {
         html +=
           "<td>" + (course.isPublished ? "✅ Published" : "⏳ Draft") + "</td>";
         html +=
-          "<td><button onclick=\"deleteCourse('" +
+          "<td><button onclick=\"editCourseFromTable('" +
+          course._id +
+          '\')" class="btn btn-small" style="background:var(--accent); color:#fff; margin-right:6px;">Edit</button><button onclick="deleteCourse(\'' +
           course._id +
           '\')" class="btn btn-small" style="background:#ff1744; color:#fff;">Delete</button></td>';
         html += "</tr>";
@@ -304,3 +306,132 @@ async function deleteCourse(id) {
 
 // Load dashboard on page load
 loadDashboard();
+// EDIT COURSE FUNCTIONS
+
+var originalShowSection = showSection;
+showSection = function (name) {
+  var sections = [
+    "dashboard",
+    "courses",
+    "addcourse",
+    "editcourse",
+    "users",
+    "addlesson",
+  ];
+  sections.forEach(function (s) {
+    var el = document.getElementById("section-" + s);
+    if (el) el.style.display = "none";
+  });
+  var target = document.getElementById("section-" + name);
+  if (target) target.style.display = "block";
+  document.querySelectorAll(".sidebar-link").forEach(function (link) {
+    link.classList.remove("active");
+  });
+  if (event && event.target) event.target.classList.add("active");
+  if (name === "courses") loadCourses();
+  if (name === "users") loadUsers();
+  if (name === "addlesson") loadCourseDropdown();
+  if (name === "dashboard") loadDashboard();
+  if (name === "editcourse") loadEditCourseDropdown();
+};
+
+async function loadEditCourseDropdown() {
+  try {
+    var res = await fetch(API + "/courses/admin/all", {
+      headers: getHeaders(),
+    });
+    var data = await res.json();
+    var select = document.getElementById("editCourseSelect");
+    select.innerHTML = '<option value="">-- Select a course --</option>';
+    if (data.success) {
+      data.data.forEach(function (course) {
+        select.innerHTML +=
+          '<option value="' + course._id + '">' + course.title + "</option>";
+      });
+    }
+  } catch (error) {
+    console.error("Load edit dropdown error:", error);
+  }
+}
+
+async function loadCourseData() {
+  var courseId = document.getElementById("editCourseSelect").value;
+  var fieldsDiv = document.getElementById("editCourseFields");
+  if (!courseId) {
+    fieldsDiv.style.display = "none";
+    return;
+  }
+  try {
+    var res = await fetch(API + "/courses/" + courseId, {
+      headers: getHeaders(),
+    });
+    var data = await res.json();
+    if (data.success) {
+      var course = data.data;
+      document.getElementById("editTitle").value = course.title;
+      document.getElementById("editDesc").value = course.description;
+      document.getElementById("editPrice").value = course.price;
+      document.getElementById("editCategory").value = course.category;
+      document.getElementById("editPublished").checked = course.isPublished;
+      document.getElementById("editLocked").checked = course.isLocked;
+      document.getElementById("editCurrentImage").textContent = course.image
+        ? "Current: " + course.image
+        : "No image";
+      fieldsDiv.style.display = "block";
+    }
+  } catch (error) {
+    console.error("Load course data error:", error);
+  }
+}
+
+var editCourseForm = document.getElementById("editCourseForm");
+if (editCourseForm) {
+  editCourseForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var msgDiv = document.getElementById("editMessage");
+    var courseId = document.getElementById("editCourseSelect").value;
+    if (!courseId) {
+      msgDiv.style.color = "red";
+      msgDiv.textContent = "Select a course";
+      return;
+    }
+    var formData = new FormData();
+    formData.append("title", document.getElementById("editTitle").value);
+    formData.append("description", document.getElementById("editDesc").value);
+    formData.append("price", document.getElementById("editPrice").value);
+    formData.append("category", document.getElementById("editCategory").value);
+    formData.append(
+      "isPublished",
+      document.getElementById("editPublished").checked,
+    );
+    formData.append("isLocked", document.getElementById("editLocked").checked);
+    var imageFile = document.getElementById("editImage").files[0];
+    if (imageFile) formData.append("image", imageFile);
+    try {
+      var res = await fetch(API + "/courses/" + courseId, {
+        method: "PUT",
+        headers: { Authorization: "Bearer " + token },
+        body: formData,
+      });
+      var data = await res.json();
+      if (data.success) {
+        msgDiv.style.color = "green";
+        msgDiv.textContent = "Course updated successfully!";
+      } else {
+        msgDiv.style.color = "red";
+        msgDiv.textContent = data.message;
+      }
+    } catch (error) {
+      msgDiv.style.color = "red";
+      msgDiv.textContent = "Server error. Try again.";
+    }
+  });
+}
+
+function editCourseFromTable(courseId) {
+  showSection("editcourse");
+  setTimeout(function () {
+    document.getElementById("editCourseSelect").value = courseId;
+    loadCourseData();
+  }, 300);
+}

@@ -62,6 +62,9 @@
         <a href="#" class="sidebar-link" onclick="showSection('addcourse')"
           >➕ Add Course</a
         >
+        <a href="#" class="sidebar-link" onclick="showSection('editcourse')"
+          >✏️ Edit Course</a
+        >
         <a href="#" class="sidebar-link" onclick="showSection('users')"
           >👥 Users</a
         >
@@ -237,7 +240,112 @@
             </form>
           </div>
         </div>
-
+        <!-- EDIT COURSE SECTION -->
+        <div id="section-editcourse" style="display: none">
+          <h1
+            style="
+              font-size: 2rem;
+              font-weight: 800;
+              letter-spacing: -0.03em;
+              margin-bottom: 32px;
+            "
+          >
+            Edit Course
+          </h1>
+          <div class="dashboard-card" style="max-width: 600px">
+            <form id="editCourseForm">
+              <div class="form-group">
+                <label>Select Course to Edit</label>
+                <select
+                  id="editCourseSelect"
+                  onchange="loadCourseData()"
+                  required
+                >
+                  <option value="">-- Select a course --</option>
+                </select>
+              </div>
+              <div id="editCourseFields" style="display: none">
+                <div class="form-group">
+                  <label>Course Title</label>
+                  <input type="text" id="editTitle" required />
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea id="editDesc" required></textarea>
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 16px;
+                  "
+                >
+                  <div class="form-group">
+                    <label>Price (₹)</label>
+                    <input type="number" id="editPrice" required />
+                  </div>
+                  <div class="form-group">
+                    <label>Category</label>
+                    <select id="editCategory">
+                      <option value="beginner">Beginner</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                      <option value="masterclass">Masterclass</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>New Image (leave blank to keep current)</label>
+                  <input type="file" id="editImage" accept="image/*" />
+                  <p
+                    id="editCurrentImage"
+                    style="
+                      font-size: 0.8rem;
+                      color: var(--text-muted);
+                      margin-top: 4px;
+                    "
+                  ></p>
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 16px;
+                    margin-bottom: 20px;
+                  "
+                >
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 8px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input type="checkbox" id="editPublished" /> Published
+                  </label>
+                  <label
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 8px;
+                      cursor: pointer;
+                    "
+                  >
+                    <input type="checkbox" id="editLocked" /> Locked
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary form-btn">
+                  Update Course
+                </button>
+              </div>
+              <div
+                id="editMessage"
+                style="text-align: center; margin-top: 16px; font-size: 0.9rem"
+              ></div>
+            </form>
+          </div>
+        </div>
         <!-- USERS SECTION -->
         <div id="section-users" style="display: none">
           <h1
