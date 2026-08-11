@@ -36,11 +36,21 @@ const registerUser = async (req, res) => {
     }
 
     // --- Naya User Banao ---
+    // Referral code generate karo
+    const referralCode =
+      name.replace(/\s/g, "").toUpperCase().substring(0, 4) +
+      Math.random().toString(36).substring(2, 6).toUpperCase();
+
+    // Referred by field
+    const referredBy = req.body.referredBy || "";
+
     const user = await User.create({
       name,
       email,
       password,
       phone: phone || "",
+      referredBy: referredBy,
+      referralCode: referralCode,
     });
 
     // --- Success Response ---
@@ -52,6 +62,7 @@ const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        referralCode: user.referralCode,
         token: generateToken(user._id),
       },
     });

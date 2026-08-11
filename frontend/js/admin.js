@@ -129,13 +129,18 @@ async function loadUsers() {
         html += "<td>" + u.name + "</td>";
         html += "<td>" + u.email + "</td>";
         html += "<td>" + u.role + "</td>";
+        html += "<td>" + (u.referredBy || "-") + "</td>";
+        html +=
+          '<td style="color: var(--accent); font-weight: 600;">' +
+          (u.referralCode || "-") +
+          "</td>";
         html += "<td>" + new Date(u.createdAt).toLocaleDateString() + "</td>";
         html += "</tr>";
       });
       tbody.innerHTML = html;
     } else {
       tbody.innerHTML =
-        '<tr><td colspan="4" style="text-align:center; padding:40px;">No users found.</td></tr>';
+        '<tr><td colspan="6" style="text-align:center; padding:40px;">No users found.</td></tr>';
     }
   } catch (error) {
     console.error("Load users error:", error);
