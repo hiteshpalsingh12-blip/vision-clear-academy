@@ -62,7 +62,8 @@ const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
-        referralCode: user.referralCode,
+        referralCode: user.referralCode || "",
+        enrolledCourses: user.enrolledCourses,
         token: generateToken(user._id),
       },
     });
